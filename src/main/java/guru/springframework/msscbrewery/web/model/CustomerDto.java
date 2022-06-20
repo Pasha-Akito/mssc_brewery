@@ -15,6 +15,6 @@ public class CustomerDto {
 
     //Customer Object
     private UUID id;
-    private String name;
+    private String customerName;
 
 }
