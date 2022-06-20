@@ -15,6 +15,7 @@ public class BeerController {
     //Where we map our API Endpoint
 
     private final BeerService beerService;
+
     //Defining Beer Service
     //Abstracts Business logic in Service Interface and then in ServiceImpl
     public BeerController(BeerService beerService) {
@@ -23,14 +24,13 @@ public class BeerController {
 
     //Mapping GET Request by beerId
     @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDto> getBeer(@PathVariable UUID beerId){
-        return  new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
+    public ResponseEntity<BeerDto> getBeer(@PathVariable UUID beerId) {
+        return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
     //Mapping POST Request
     @PostMapping
-    public ResponseEntity<BeerDto> handlePost(BeerDto beerDto){
-
+    public ResponseEntity<BeerDto> handlePost(BeerDto beerDto) {
         //Using Service to save new beer
         BeerDto savedDto = beerService.saveNewBeer(beerDto);
         //Setting Http headers to make a response body to the location of the newly created beer object
@@ -38,7 +38,13 @@ public class BeerController {
         headers.add("Location", "/api/v1/beer/" + savedDto.getId().toString());
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
 
+    @PutMapping("/{beerId}")
+    public ResponseEntity<BeerDto> handleUpdate(@PathVariable UUID beerId, BeerDto beerDto) {
+        //Using Service to update beer
+        beerService.updateBeer(beerId, beerDto);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
