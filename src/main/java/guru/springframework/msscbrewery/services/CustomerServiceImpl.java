@@ -28,4 +28,9 @@ public class CustomerServiceImpl implements CustomerService {
     public void updateCustomer(UUID customerId, CustomerDto customerDto) {
         log.debug("Updating a customer...");
     }
+
+    @Override
+    public void deleteById(UUID customerId) {
+        log.debug("Deleting a customer...");
+    }
 }
